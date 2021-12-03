@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { purple } from '@mui/material/colors';
+import Form from './components/Form';
+import Notes from './components/Notes';
+import { Provider } from 'react-redux';
+import Layout from './components/Layout';
 
-function App() {
+const theme = createTheme({
+  palette: {
+    secondary: purple
+  },
+})
+
+function App({ store }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Notes />} />
+              <Route path="/form" element={<Form />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
